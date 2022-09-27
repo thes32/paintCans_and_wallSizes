@@ -1,0 +1,15 @@
+ClientName,John Smith
+Walls,4
+wl1,3,5
+wl2,3,4
+wl3,3,2
+wl4,5,2
+Exceptions,2
+ex1,2,1
+ex2,3,1
+PaintNeeded
+1litre,0,17
+1.5litre,0,19
+2.5litre,0,22
+5litre,1,30
+10litre,0,40
