@@ -2,8 +2,7 @@ import os.path
 import os
 import time
 
-
-# Shift F10 to run, 2xShift to search
+# Shift F10 to run, 2xShift to search, Shift F6 to rename variable
 
 def SetBaseVariables(): # this is used to make sure all global variables have been declared
     # variables to know if the files has been found in the system
@@ -143,6 +142,7 @@ def PrintFileContent(content):
                 numOfExceptions = int(lineContent[1])
                 if numOfExceptions > 0 : currentLine = "exceptions"
             case "PaintNeeded":
+                paintChoice = lineContent[1]
                 currentLine = "paints"
             case "PrimerNeeded":
                 primerNeeded = lineContent[1]
@@ -171,7 +171,12 @@ def PrintFileContent(content):
     os.system('cls')
     print()
     print(f"Hello, {customerName}")
+
+    usedPaint = ReadPaintFileDataRaw(5)
+
     print(f"Per you last calculation, you had {numOfWalls} walls with a total area of {totalPaintableArea} m2")
+
+    print(f"You chose to go with {usedPaint[1]} {usedPaint[2]} paint")
 
     #if multiple cans, use plural
     if int(primerNeeded) > 1: cans = "cans"
