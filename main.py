@@ -269,7 +269,9 @@ def InformationWallMeasurementsGathering(): # for each wall that they want paint
 def InformationExceptionNumberGathering():
     print()
     global info_exceptions # global variable
+    global info_lastInputException # global variable
 
+    info_exceptions = 0
     valid = False
     while not valid: # way of making sure that the thing going forward is definitely going to run
 
@@ -280,6 +282,7 @@ def InformationExceptionNumberGathering():
         except ValueError: # if it's not given an int, error out and restart function
             print(f"That is not a valid option, please use a number")
 
+    info_lastInputException = 1
     if info_exceptions == 0: CoatsOfPaint()
     else: InformationExceptionMeasurementGathering()
     # go to next part of code
@@ -287,9 +290,13 @@ def InformationExceptionNumberGathering():
 def InformationExceptionMeasurementGathering():
     print()
     global info_lastInputException  # global variable
+    global info_exceptionMeasurements # global variable
+
+    info_exceptionMeasurements = []
+
     tempStart = info_lastInputException  # allow user to continue where they left off, instead of starting from 0
 
-    for i in range(tempStart, info_walls + 1):
+    for i in range(tempStart, info_exceptions + 1):
         valid1 = False
         while not valid1:  # way of making sure that the thing going forward is definitely going to run
 
@@ -311,15 +318,26 @@ def InformationExceptionMeasurementGathering():
                 print("I'm sorry, that is not a valid decimal number, please start again")
 
         info_lastInputException += 1
-        info_wallMeasurements.append([tempExceptionWidth, tempExceptionHeight]) # add measurements to list of wall measurements
+        info_exceptionMeasurements.append([tempExceptionWidth, tempExceptionHeight]) # add measurements to list of wall measurements
         if info_exceptions == 1: break
 
+    # if the wall area is smaller than the exception area, ask for the exceptions again
+    areaBiggerThanWall = CheckIfAreaIsBigger()
 
-    CoatsOfPaint()
+    if areaBiggerThanWall:
+        print("I'm sorry, but your exception area is bigger than the wall area provided, please provide the exception areas again")
+        InformationExceptionNumberGathering()
+    else:
+        CoatsOfPaint()
 
 def CheckIfAreaIsBigger():
+    wallArea = areaOfWall(info_wallMeasurements)
+    exceptionArea = areaOfExceptions(info_exceptionMeasurements)
 
-    return False
+    if exceptionArea > wallArea:
+        return True
+    else:
+        return False
 
 ### GET PAINT INFORMATION ###-------------------------------------------------------------------------------------------
 
